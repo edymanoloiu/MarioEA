@@ -34,7 +34,7 @@ public class Grass {
 			
 			// il mut in spate
 			this.position.x = this.settings.getGameWidth();
-			int rand = (int) (Math.random()*2);
+			int rand = (int) (Math.random()*8);
 			if(rand == 0)
 				isVisible = false;
 			else

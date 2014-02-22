@@ -11,8 +11,11 @@ public class Mario {
 	
 	private boolean sare;
 	private float cat_sare;
-	private static float cat_poate_sa_sara_maxim = 150;
 	private int urca_coboara;
+	
+	private int nivel_drum = 0;
+	
+	private int directie = 1;
 	
 	public Mario(float x, float y, int width, int height) {
 		
@@ -31,35 +34,72 @@ public class Mario {
 		
 		if (sare) {
 			
-			if (cat_sare > 100) {
-				sare = !sare;
-				urca_coboara = 1;
-				cat_sare = 0;
-				return;
-			}
+			if (directie == -1)
+			urca_coboara = directie;
 			
-			cat_sare += urca_coboara * 3;
+			cat_sare += urca_coboara * 2;
 			
-			if (cat_sare > cat_poate_sa_sara_maxim) {	
-				urca_coboara = -1;		
-			}
+			this.position.y += -urca_coboara * 2;
 			
-			if (cat_sare <= 0) {
-				sare = !sare;
-				urca_coboara = 1;
-			}
+			if (cat_sare == 110.0f) {
+				// inseamna ca am ajus la un maxim de inaltime, trebuie sa cobor
 				
-			this.position.add(0, -urca_coboara * 3);
+				urca_coboara = -1;
+			
+				if (nivel_drum < 1) {
+					
+					urca_coboara = 1;
+					cat_sare = 0;
+					sare = !sare;
+					nivel_drum++;
+					return;
+					
+				}
+				
+			}
+			
+			if (cat_sare == -110.0f) {
+				// inseamna ca am ajus la un maxim de inaltime, trebuie sa cobor
+				
+				urca_coboara = 1;
+				nivel_drum--;
+				
+				if (nivel_drum == 0) {
+					
+					urca_coboara = 1;
+					cat_sare = 0;
+					sare = !sare;
+					return;
+					
+				}
+				
+			}
+			
+			if (cat_sare == 0) {
+				// inseamna ca am ajuns pe solul care eram
+				
+				sare = !sare;
+				urca_coboara = 1;
+				
+			}
+			
 		}
+		
+		System.out.println(urca_coboara + " " + cat_sare + " " + directie);
 		
 		//System.out.println(this.position);
 		
 	}
 
-	public void onClick() {
+	public void onClick(int directie) {
 		
-		if (!sare)
+		if ((directie == -1) && (nivel_drum == 0))
+			return;
+		
+		if (!sare) {
 			sare = !sare;
+			this.directie = directie;
+		}
 		
 	}
 	

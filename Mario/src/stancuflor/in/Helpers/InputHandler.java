@@ -10,6 +10,8 @@ public class InputHandler implements InputProcessor {
 	private Mario mario;
 	private Singleton settings;
 	
+	private int x, y;
+	
 	public InputHandler(Mario mario) {
 		
 		this.mario = mario;
@@ -38,7 +40,11 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
-		mario.onClick();
+		//mario.onClick();
+		
+		this.x = screenX;
+		this.y = screenY;
+		
 		if(settings.getRestart()){
 			System.out.println(settings.getRestart() + " " + settings.getRestartGame());
 			settings.setRestartGame(true);
@@ -56,7 +62,17 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		// TODO Auto-generated method stub
-		return false;
+		
+		if (y > screenY) {
+			// am tras in sus
+			mario.onClick(1);
+			return true;
+		} else {
+			// am tras in jos
+			mario.onClick(-1);
+			return true;
+		}
+		
 	}
 
 	@Override

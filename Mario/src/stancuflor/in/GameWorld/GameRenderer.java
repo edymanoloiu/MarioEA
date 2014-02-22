@@ -116,12 +116,18 @@ public class GameRenderer {
 								block.position.y, block.getWidth(),
 								block.getHeight());
 					else {
+						
+						if ((mario.getPosition().x > block.position.x) && (mario.getPosition().y == 400))
+							stopGame = true;
+						
+						/*
 						if (400.0 - MarioPos.y <= 0
 								&& MarioPos.x == block.position.x) {
 							stopGame = true;
 							System.out.println("Stop!!!" + block.getVisible()
 									+ " " + MarioPos.x);
 						}
+						*/
 					}
 				}
 			} else {
@@ -138,9 +144,16 @@ public class GameRenderer {
 							block.position.y, block.getWidth(),
 							block.getHeight());
 				else {
+			
+					if ((mario.getPosition().x > block.position.x) && (mario.getPosition().y == 290))
+						mario.onClick(-1);
+					
+					/*
+					
 					if (290.0 - mario.getPosition().y <= 0) {
 						System.out.println(mario.getPosition().x + " "
 								+ block.position.x);
+
 						if (mario.getPosition().x + 10 > block.position.x + 5 ) {
 							if (!jos) {
 								mario.setPosition(new Vector2(mario
@@ -149,7 +162,13 @@ public class GameRenderer {
 								jos = true;
 							}
 						}
+						
 					}
+					
+					*/
+					
+
+					
 				}
 			}
 
