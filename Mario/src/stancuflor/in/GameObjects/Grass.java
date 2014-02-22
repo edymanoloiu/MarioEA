@@ -10,6 +10,7 @@ public class Grass {
 	
 	private int width;
 	private int height;
+	private boolean isVisible;
 	
 	private Singleton settings;
 	
@@ -21,6 +22,8 @@ public class Grass {
 		this.position = new Vector2(x, y);
 		this.settings = Singleton.getInstance();
 		
+		isVisible = true;
+		
 	}
 	
 	public void update(float delta) {
@@ -31,7 +34,11 @@ public class Grass {
 			
 			// il mut in spate
 			this.position.x = this.settings.getGameWidth();
-			
+			int rand = (int) (Math.random()*2);
+			if(rand == 0)
+				isVisible = false;
+			else
+				isVisible = true;
 		} else {
 			
 			// il translatez un pic la stanga
@@ -56,6 +63,14 @@ public class Grass {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
+	
+	public boolean getVisible() {
+		return isVisible;
 	}
 	
 }

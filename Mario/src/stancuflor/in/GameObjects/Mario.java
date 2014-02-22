@@ -56,7 +56,7 @@ public class Mario {
 			this.position.add(0, -urca_coboara * 3);
 		}
 		
-		System.out.println(this.position);
+		//System.out.println(this.position);
 		
 	}
 

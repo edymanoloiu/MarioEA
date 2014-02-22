@@ -92,7 +92,7 @@ public class GameRenderer {
 
 			fontName.setScale((float) 1.5, (float) -1.5);
 			fontName.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-			fontName.draw(batcher, scoreName, 25, 100);
+			fontName.draw(batcher, scoreName, gameWidth - 180, 100);
 
 			// Disable transparency
 			// This is good for performance when drawing images that do not
@@ -116,17 +116,20 @@ public class GameRenderer {
 						}
 					}
 				}
-			}else{
+			} else {
 				for (Road block : myWorld.getRoad()) {
 					batcher.draw(AssetLoader.road, block.position.x,
 							block.position.y, block.getWidth(),
 							block.getHeight());
 				}
 			}
-			
+
 			for (Grass block : myWorld.grass) {
-	        	batcher.draw(AssetLoader.grass, block.position.x, block.position.y, block.getWidth(), block.getHeight());
-	        }
+				if (block.getVisible())
+					batcher.draw(AssetLoader.grass, block.position.x,
+							block.position.y, block.getWidth(),
+							block.getHeight());
+			}
 
 			// The bird needs transparency, so we enable that again.
 			batcher.enableBlending();
