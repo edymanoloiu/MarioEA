@@ -38,6 +38,7 @@ public class GameRenderer {
 
 	private Singleton settings;
 	private boolean gameRestarted = false;
+	private boolean jos = true;
 
 	public GameRenderer(GameWorld world) {
 
@@ -86,6 +87,13 @@ public class GameRenderer {
 		Gdx.gl.glClearColor(0.4f, 0.5f, 0.9f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+		if (mario.getPosition().y < 305)
+			jos = false;
+		else
+			jos = true;
+
+		// System.out.println(mario.getPosition().y + " " + jos);
+
 		if (!stopGame) {
 			// Begin SpriteBatch
 			batcher.begin();
@@ -107,7 +115,7 @@ public class GameRenderer {
 						batcher.draw(AssetLoader.road, block.position.x,
 								block.position.y, block.getWidth(),
 								block.getHeight());
-					if (!block.getVisible()) {
+					else {
 						if (400.0 - MarioPos.y <= 0
 								&& MarioPos.x == block.position.x) {
 							stopGame = true;
@@ -129,6 +137,20 @@ public class GameRenderer {
 					batcher.draw(AssetLoader.grass, block.position.x,
 							block.position.y, block.getWidth(),
 							block.getHeight());
+				else {
+					if (290.0 - mario.getPosition().y <= 0) {
+						System.out.println(mario.getPosition().x + " "
+								+ block.position.x);
+						if (mario.getPosition().x + 10 > block.position.x + 5 ) {
+							if (!jos) {
+								mario.setPosition(new Vector2(mario
+										.getPosition().x, mario
+										.getPosition().y + 105));
+								jos = true;
+							}
+						}
+					}
+				}
 			}
 
 			// The bird needs transparency, so we enable that again.

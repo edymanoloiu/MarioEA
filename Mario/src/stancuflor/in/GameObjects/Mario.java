@@ -40,17 +40,13 @@ public class Mario {
 			
 			cat_sare += urca_coboara * 3;
 			
-			if (cat_sare > cat_poate_sa_sara_maxim) {
-			
-				urca_coboara = -1;
-			
+			if (cat_sare > cat_poate_sa_sara_maxim) {	
+				urca_coboara = -1;		
 			}
 			
 			if (cat_sare <= 0) {
-			
 				sare = !sare;
 				urca_coboara = 1;
-			
 			}
 				
 			this.position.add(0, -urca_coboara * 3);
