@@ -11,8 +11,10 @@ public class AssetLoader {
 	public static Texture texture;
 	
     public static Animation marioAnimation;
+    public static Animation gokuAnimation;
     public static TextureRegion road;
     public static TextureRegion grass;
+    public static TextureRegion teava;
 	
     public static void load() {
     	
@@ -25,17 +27,32 @@ public class AssetLoader {
     		
     		mario[i] = new TextureRegion(texture, i * 40, 0, 40, 40);
     		mario[i].flip(false, true);
-
-    		marioAnimation = new Animation(0.06f, mario);
-    		marioAnimation.setPlayMode(Animation.LOOP_PINGPONG);
     		
     	}
+    	
+		marioAnimation = new Animation(0.06f, mario);
+		marioAnimation.setPlayMode(Animation.LOOP_PINGPONG);
+    	
+    	TextureRegion[] goku = new TextureRegion[4];
+    	
+    	for (int i = 0; i < 4; i++) {
+    		
+    		goku[i] = new TextureRegion(texture, i * 30, 40, 30, 46);
+    		goku[i].flip(false, true);
+    		
+    	}
+    	
+		gokuAnimation = new Animation(0.06f, goku);
+		gokuAnimation.setPlayMode(Animation.LOOP_PINGPONG);
     	
     	road = new TextureRegion(texture, 8 * 40, 0, 40, 40);
     	road.flip(false, true);
     	
     	grass = new TextureRegion(texture, 9 * 40, 0, 51, 40);
     	grass.flip(false, true);
+    	
+    	teava = new TextureRegion(texture, 9 * 40 + 51, 0, 40, 60);
+    	teava.flip(false, true);
     	
     }
     

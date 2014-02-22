@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 
 public class GameRenderer {
 
@@ -25,6 +26,7 @@ public class GameRenderer {
 	private float gameHeight;
 
 	private boolean stopGame = false;
+	private boolean startGame = true;
 
 	private int score;
 	private String scoreName;
@@ -36,6 +38,7 @@ public class GameRenderer {
 
 	private Singleton settings;
 	private boolean gameRestarted = false;
+	private boolean jos = true;
 
 	public GameRenderer(GameWorld world) {
 
@@ -84,10 +87,19 @@ public class GameRenderer {
 		Gdx.gl.glClearColor(0.4f, 0.5f, 0.9f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+		if (mario.getPosition().y < 305)
+			jos = false;
+		else
+			jos = true;
+
+		// System.out.println(mario.getPosition().y + " " + jos);
+
 		if (!stopGame) {
 			// Begin SpriteBatch
 			batcher.begin();
 
+			//scoreName = "" + mario.getPosition().y;
+			
 			fontName.setScale((float) 1.5, (float) -1.5);
 			fontName.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 			fontName.draw(batcher, scoreName, gameWidth - 180, 100);
@@ -99,18 +111,26 @@ public class GameRenderer {
 			batcher.disableBlending();
 
 			if (!gameRestarted) {
+				Vector2 MarioPos = myWorld.getMario().getPosition();
 				for (Road block : myWorld.getRoad()) {
 					if (block.getVisible())
 						batcher.draw(AssetLoader.road, block.position.x,
 								block.position.y, block.getWidth(),
 								block.getHeight());
 					else {
-
-						if ((mario.getPosition().x > block.position.x)
-								&& ((mario.getPosition().y > 365) && (mario
-										.getPosition().y < 405)))
+						
+						//if ((mario.getPosition().x > block.position.x) && ((mario.getPosition().y > 365) && (mario.getPosition().y < 405)))
+						if ((mario.getPosition().x + 20 > block.position.x) && (mario.getPosition().y == 400))
 							stopGame = true;
-
+						
+						/*
+						if (400.0 - MarioPos.y <= 0
+								&& MarioPos.x == block.position.x) {
+							stopGame = true;
+							System.out.println("Stop!!!" + block.getVisible()
+									+ " " + MarioPos.x);
+						}
+						*/
 					}
 				}
 			} else {
@@ -128,10 +148,36 @@ public class GameRenderer {
 							block.position.y, block.getWidth(),
 							block.getHeight());
 				else {
-					if ((mario.getPosition().x > block.position.x)
-							&& ((mario.getPosition().y > 255) && (mario
-									.getPosition().y < 295)))
+			
+					//if ((mario.getPosition().x > block.position.x) && ((mario.getPosition().y > 255) && (mario.getPosition().y < 295)))
+					if ((mario.getPosition().x + 20 > block.position.x) && (mario.getPosition().y == 290) && (block.nivel == 1))
 						mario.onClick(-1);
+					
+					//if ((mario.getPosition().x > block.position.x) && ((mario.getPosition().y > 255) && (mario.getPosition().y < 295)))
+					if ((mario.getPosition().x + 20 > block.position.x) && (mario.getPosition().y == 180) && (block.nivel == 2))
+						mario.onClick(-1);
+					
+					/*
+					
+					if (290.0 - mario.getPosition().y <= 0) {
+						System.out.println(mario.getPosition().x + " "
+								+ block.position.x);
+
+						if (mario.getPosition().x + 10 > block.position.x + 5 ) {
+							if (!jos) {
+								mario.setPosition(new Vector2(mario
+										.getPosition().x, mario
+										.getPosition().y + 105));
+								jos = true;
+							}
+						}
+						
+					}
+					
+					*/
+					
+
+					
 				}
 			}
 
@@ -145,6 +191,14 @@ public class GameRenderer {
 			batcher.draw(AssetLoader.marioAnimation.getKeyFrame(runTime),
 					mario.getPosition().x, mario.getPosition().y,
 					mario.getWidth(), mario.getHeight());
+			
+			batcher.draw(AssetLoader.gokuAnimation.getKeyFrame(runTime),
+					myWorld.goku.position.x, myWorld.goku.position.y,
+					myWorld.goku.width, myWorld.goku.height);
+			
+			batcher.draw(AssetLoader.teava,
+					myWorld.teava.position.x, myWorld.teava.position.y,
+					myWorld.teava.width, myWorld.teava.height);
 
 			// End SpriteBatch
 			batcher.end();

@@ -13,14 +13,14 @@ public class Singleton {
     public Singleton() {}
     
 	public Singleton(float gameWidth, float gameHeight) {
-		
+
 		Singleton.getInstance().setGameHeight(gameHeight);
 		Singleton.getInstance().setGameWidth(gameWidth);
 		restart = false;
 		restartGame = false;
 		gameOver = false;
 	}
-	
+
 	public static Singleton getInstance() {
 		return instance;
 	}
@@ -40,29 +40,29 @@ public class Singleton {
 	public void setGameHeight(float gameHeight) {
 		this.gameHeight = gameHeight;
 	}
-	
+
 	public void setRestart(boolean restart) {
 		this.restart = restart;
 	}
-	
+
 	public boolean getRestart(){
 		return restart;
 	}
-	
+
 	public void setRestartGame(boolean restartGame) {
 		this.restartGame = restartGame;
 	}
-	
+
 	public boolean getRestartGame(){
 		return restartGame;
 	}
-	
+
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
-	
+
 	public boolean getGameOver(){
 		return gameOver;
 	}
-	
+
 }

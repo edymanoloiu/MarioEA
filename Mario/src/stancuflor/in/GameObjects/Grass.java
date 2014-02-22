@@ -12,9 +12,11 @@ public class Grass {
 	private int height;
 	private boolean isVisible;
 	
+	public int nivel;
+	
 	private Singleton settings;
 	
-	public Grass(float x, float y, int width, int height) {
+	public Grass(float x, float y, int width, int height, int nivel) {
 		
 		this.setWidth(width);
 		this.setHeight(height);
@@ -23,6 +25,8 @@ public class Grass {
 		this.settings = Singleton.getInstance();
 		
 		isVisible = true;
+		
+		this.nivel = nivel;
 		
 	}
 	

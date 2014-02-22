@@ -46,6 +46,7 @@ public class InputHandler implements InputProcessor {
 		this.y = screenY;
 		
 		if(settings.getRestart()){
+			System.out.println(settings.getRestart() + " " + settings.getRestartGame());
 			settings.setRestartGame(true);
 			settings.setGameOver(false);
 		}

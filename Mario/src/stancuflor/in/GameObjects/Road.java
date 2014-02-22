@@ -41,6 +41,7 @@ public class Road {
 				isVisible = false;
 			else
 				isVisible = true;
+			
 		} else {
 			
 			// il translatez un pic la stanga
