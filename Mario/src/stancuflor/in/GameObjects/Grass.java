@@ -30,6 +30,9 @@ public class Grass {
 		
 		float x = this.position.x;
 		
+		if(settings.getGameOver())
+			return;
+		
 		if (x < -width) {
 			
 			// il mut in spate

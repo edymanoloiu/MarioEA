@@ -29,6 +29,9 @@ public class Road {
 		
 		float x = this.position.x;
 		
+		if(settings.getGameOver())
+			return;
+		
 		if (x < -width + 10) {
 			
 			// il mut in spate

@@ -98,6 +98,8 @@ public class GameRenderer {
 			// Begin SpriteBatch
 			batcher.begin();
 
+			// scoreName = "" + mario.getPosition().y;
+
 			fontName.setScale((float) 1.5, (float) -1.5);
 			fontName.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 			fontName.draw(batcher, scoreName, gameWidth - 180, 100);
@@ -109,29 +111,23 @@ public class GameRenderer {
 			batcher.disableBlending();
 
 			if (!gameRestarted) {
-				Vector2 MarioPos = myWorld.getMario().getPosition();
 				for (Road block : myWorld.getRoad()) {
 					if (block.getVisible())
 						batcher.draw(AssetLoader.road, block.position.x,
 								block.position.y, block.getWidth(),
 								block.getHeight());
 					else {
-						
-						if ((mario.getPosition().x > block.position.x) && (mario.getPosition().y == 400))
+
+						if ((mario.getPosition().x > block.position.x)
+								&& ((mario.getPosition().y > 365) && (mario
+										.getPosition().y < 405)))
 							stopGame = true;
-						
-						/*
-						if (400.0 - MarioPos.y <= 0
-								&& MarioPos.x == block.position.x) {
-							stopGame = true;
-							System.out.println("Stop!!!" + block.getVisible()
-									+ " " + MarioPos.x);
-						}
-						*/
+
 					}
 				}
 			} else {
 				for (Road block : myWorld.getRoad()) {
+					block.setVisible(true);
 					batcher.draw(AssetLoader.road, block.position.x,
 							block.position.y, block.getWidth(),
 							block.getHeight());
@@ -144,31 +140,10 @@ public class GameRenderer {
 							block.position.y, block.getWidth(),
 							block.getHeight());
 				else {
-			
-					if ((mario.getPosition().x > block.position.x) && (mario.getPosition().y == 290))
+					if ((mario.getPosition().x > block.position.x)
+							&& ((mario.getPosition().y > 255) && (mario
+									.getPosition().y < 295)))
 						mario.onClick(-1);
-					
-					/*
-					
-					if (290.0 - mario.getPosition().y <= 0) {
-						System.out.println(mario.getPosition().x + " "
-								+ block.position.x);
-
-						if (mario.getPosition().x + 10 > block.position.x + 5 ) {
-							if (!jos) {
-								mario.setPosition(new Vector2(mario
-										.getPosition().x, mario
-										.getPosition().y + 105));
-								jos = true;
-							}
-						}
-						
-					}
-					
-					*/
-					
-
-					
 				}
 			}
 
@@ -187,14 +162,28 @@ public class GameRenderer {
 			batcher.end();
 		} else {
 			batcher.begin();
+			settings.setGameOver(true);
+			for (Road block : myWorld.getRoad())
+				if (block.getVisible())
+					batcher.draw(AssetLoader.road, block.position.x,
+							block.position.y, block.getWidth(),
+							block.getHeight());
+			for (Grass block : myWorld.grass)
+				if (block.getVisible())
+					batcher.draw(AssetLoader.grass, block.position.x,
+							block.position.y, block.getWidth(),
+							block.getHeight());
 			finalMessage.setScale((float) 2, (float) -2);
 			finalMessage.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 			finalMessage.draw(batcher, finalMes, gameWidth / 2 - 100,
-					gameHeight / 2 - 50);
+					gameHeight / 2 - 100);
 			restartMessage.setScale((float) 2, (float) -2);
 			restartMessage.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 			restartMessage.draw(batcher, restart, gameWidth / 2 - 250,
-					gameHeight / 2);
+					gameHeight / 2 - 50);
+			batcher.draw(AssetLoader.marioAnimation.getKeyFrame(runTime),
+					mario.getPosition().x, mario.getPosition().y + 30,
+					mario.getWidth(), mario.getHeight());
 			settings.setRestart(true);
 			batcher.end();
 		}

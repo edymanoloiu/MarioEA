@@ -8,7 +8,8 @@ public class Singleton {
     private float gameHeight;
     private boolean restart;
     private boolean restartGame;
-	
+    private boolean gameOver;
+    
     public Singleton() {}
     
 	public Singleton(float gameWidth, float gameHeight) {
@@ -17,7 +18,7 @@ public class Singleton {
 		Singleton.getInstance().setGameWidth(gameWidth);
 		restart = false;
 		restartGame = false;
-		
+		gameOver = false;
 	}
 	
 	public static Singleton getInstance() {
@@ -54,6 +55,14 @@ public class Singleton {
 	
 	public boolean getRestartGame(){
 		return restartGame;
+	}
+	
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+	
+	public boolean getGameOver(){
+		return gameOver;
 	}
 	
 }
