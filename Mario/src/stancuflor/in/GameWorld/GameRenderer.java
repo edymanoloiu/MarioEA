@@ -1,5 +1,6 @@
 package stancuflor.in.GameWorld;
 
+import stancuflor.in.GameObjects.Grass;
 import stancuflor.in.GameObjects.Mario;
 import stancuflor.in.GameObjects.Road;
 import stancuflor.in.Helpers.AssetLoader;
@@ -122,6 +123,10 @@ public class GameRenderer {
 							block.getHeight());
 				}
 			}
+			
+			for (Grass block : myWorld.grass) {
+	        	batcher.draw(AssetLoader.grass, block.position.x, block.position.y, block.getWidth(), block.getHeight());
+	        }
 
 			// The bird needs transparency, so we enable that again.
 			batcher.enableBlending();

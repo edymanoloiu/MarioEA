@@ -11,7 +11,7 @@ public class Mario {
 	
 	private boolean sare;
 	private float cat_sare;
-	private static float cat_poate_sa_sara_maxim = 70;
+	private static float cat_poate_sa_sara_maxim = 150;
 	private int urca_coboara;
 	
 	public Mario(float x, float y, int width, int height) {
@@ -31,6 +31,13 @@ public class Mario {
 		
 		if (sare) {
 			
+			if (cat_sare > 100) {
+				sare = !sare;
+				urca_coboara = 1;
+				cat_sare = 0;
+				return;
+			}
+			
 			cat_sare += urca_coboara * 3;
 			
 			if (cat_sare > cat_poate_sa_sara_maxim) {
@@ -39,7 +46,7 @@ public class Mario {
 			
 			}
 			
-			if (cat_sare < 0) {
+			if (cat_sare <= 0) {
 			
 				sare = !sare;
 				urca_coboara = 1;
@@ -48,6 +55,8 @@ public class Mario {
 				
 			this.position.add(0, -urca_coboara * 3);
 		}
+		
+		System.out.println(this.position);
 		
 	}
 

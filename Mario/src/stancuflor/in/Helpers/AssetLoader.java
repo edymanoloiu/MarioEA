@@ -12,6 +12,7 @@ public class AssetLoader {
 	
     public static Animation marioAnimation;
     public static TextureRegion road;
+    public static TextureRegion grass;
 	
     public static void load() {
     	
@@ -32,6 +33,9 @@ public class AssetLoader {
     	
     	road = new TextureRegion(texture, 8 * 40, 0, 40, 40);
     	road.flip(false, true);
+    	
+    	grass = new TextureRegion(texture, 9 * 40, 0, 51, 40);
+    	grass.flip(false, true);
     	
     }
     
