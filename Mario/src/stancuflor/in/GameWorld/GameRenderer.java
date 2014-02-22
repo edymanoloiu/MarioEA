@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 
 public class GameRenderer {
 
@@ -27,7 +26,6 @@ public class GameRenderer {
 	private float gameHeight;
 
 	private boolean stopGame = false;
-	private boolean startGame = true;
 
 	private int score;
 	private String scoreName;
@@ -39,7 +37,8 @@ public class GameRenderer {
 
 	private Singleton settings;
 	private boolean gameRestarted = false;
-	private boolean jos = true;
+	private boolean stopedByGoku = false;
+	private boolean stopedByTeava = false;
 
 	public GameRenderer(GameWorld world) {
 
@@ -70,7 +69,6 @@ public class GameRenderer {
 
 		Mario mario = myWorld.getMario();
 
-		score++;
 		scoreName = "Score: " + score;
 		gameRestarted = false;
 
@@ -81,6 +79,19 @@ public class GameRenderer {
 			settings.setRestart(false);
 			stopGame = false;
 			gameRestarted = true;
+			stopedByGoku = false;
+			stopedByTeava = false;
+		}
+		System.out.println(myWorld.goku.position.x);
+		if ((myWorld.goku.position.x - mario.getPosition().x < 0)
+				&& ((mario.getPosition().y > 255) && (mario.getPosition().y < 295))) {
+			stopGame = true;
+			stopedByGoku = true;
+		}
+		if ((mario.getPosition().x + 40 == myWorld.teava.position.x)
+				&& ((mario.getPosition().y > 365) && (mario.getPosition().y < 405))) {
+			stopGame = true;
+			stopedByTeava = true;
 		}
 
 		// Fill the entire screen with black, to prevent potential
@@ -88,15 +99,9 @@ public class GameRenderer {
 		Gdx.gl.glClearColor(0.4f, 0.5f, 0.9f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		if (mario.getPosition().y < 305)
-			jos = false;
-		else
-			jos = true;
-
-		// System.out.println(mario.getPosition().y + " " + jos);
-
 		if (!stopGame) {
 			// Begin SpriteBatch
+			score++;
 			batcher.begin();
 
 			fontName.setScale((float) 1.5, (float) -1.5);
@@ -110,7 +115,6 @@ public class GameRenderer {
 			batcher.disableBlending();
 
 			if (!gameRestarted) {
-				Vector2 MarioPos = myWorld.getMario().getPosition();
 				for (Road block : myWorld.getRoad()) {
 					if (block.getVisible())
 						batcher.draw(AssetLoader.road, block.position.x,
@@ -183,11 +187,11 @@ public class GameRenderer {
 				int highScore = Integer.parseInt(text);
 				if (score > highScore) {
 					file.writeString(score + "", false);
-					finalMes = "New High Score : " + score + "!!!!";
+					finalMes = "New High Score : " + score + " !!!!";
 				}
 			} else {
 				file.writeString(score + "", false);
-				finalMes = "New High Score : " + score + "!!!!";
+				finalMes = "New High Score : " + score + " !!!!";
 			}
 			batcher.begin();
 			settings.setGameOver(true);
@@ -209,9 +213,25 @@ public class GameRenderer {
 			restartMessage.setColor(1.0f, 0.0f, 0.0f, 1.0f);
 			restartMessage.draw(batcher, restart, gameWidth / 2 - 250,
 					gameHeight / 2 - 50);
-			batcher.draw(AssetLoader.marioAnimation.getKeyFrame(runTime),
-					mario.getPosition().x, mario.getPosition().y + 30,
-					mario.getWidth(), mario.getHeight());
+			if (stopedByGoku) {
+				batcher.draw(AssetLoader.gokuAnimation.getKeyFrame(runTime),
+						mario.getPosition().x + 40, myWorld.goku.position.y,
+						myWorld.goku.width, myWorld.goku.height);
+				batcher.draw(AssetLoader.marioAnimation.getKeyFrame(runTime),
+						mario.getPosition().x, mario.getPosition().y,
+						mario.getWidth(), mario.getHeight());
+			} else if (stopedByTeava) {
+				batcher.draw(AssetLoader.marioAnimation.getKeyFrame(runTime),
+						mario.getPosition().x, mario.getPosition().y,
+						mario.getWidth(), mario.getHeight());
+				batcher.draw(AssetLoader.teava, mario.getPosition().x + 40,
+						myWorld.teava.position.y, myWorld.teava.width,
+						myWorld.teava.height);
+			} else {
+				batcher.draw(AssetLoader.marioAnimation.getKeyFrame(runTime),
+						mario.getPosition().x, mario.getPosition().y + 30,
+						mario.getWidth(), mario.getHeight());
+			}
 			settings.setRestart(true);
 			batcher.end();
 		}
