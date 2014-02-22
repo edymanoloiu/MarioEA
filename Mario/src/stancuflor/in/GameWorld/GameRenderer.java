@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 
 public class GameRenderer {
 
@@ -26,7 +25,6 @@ public class GameRenderer {
 	private float gameHeight;
 
 	private boolean stopGame = false;
-	private boolean startGame = true;
 
 	private int score;
 	private String scoreName;
@@ -38,7 +36,6 @@ public class GameRenderer {
 
 	private Singleton settings;
 	private boolean gameRestarted = false;
-	private boolean jos = true;
 
 	public GameRenderer(GameWorld world) {
 
@@ -87,18 +84,9 @@ public class GameRenderer {
 		Gdx.gl.glClearColor(0.4f, 0.5f, 0.9f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		if (mario.getPosition().y < 305)
-			jos = false;
-		else
-			jos = true;
-
-		// System.out.println(mario.getPosition().y + " " + jos);
-
 		if (!stopGame) {
 			// Begin SpriteBatch
 			batcher.begin();
-
-			// scoreName = "" + mario.getPosition().y;
 
 			fontName.setScale((float) 1.5, (float) -1.5);
 			fontName.setColor(1.0f, 1.0f, 1.0f, 1.0f);
